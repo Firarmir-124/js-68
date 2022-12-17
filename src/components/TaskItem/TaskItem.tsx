@@ -3,9 +3,14 @@ import {Box, Checkbox, IconButton, Paper, Typography} from "@mui/material";
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import Favorite from '@mui/icons-material/Favorite';
 import DeleteIcon from '@mui/icons-material/Delete';
+import {Task} from "../../types";
+
+interface Props {
+  task: Task;
+}
 
 
-const TaskItem = () => {
+const TaskItem:React.FC<Props> = ({task}) => {
   return (
     <Paper
       elevation={3}
@@ -17,7 +22,7 @@ const TaskItem = () => {
         alignItems: 'center',
       }}
     >
-      <Typography component='h3' variant='h5' sx={{color: '#fff' }} ></Typography>
+      <Typography component='h3' variant='h5' sx={{color: '#fff' }} >{task.title}</Typography>
       <Box>
         <IconButton aria-label="delete">
           <DeleteIcon sx={{fontSize: 28, color: '#fff'}} />

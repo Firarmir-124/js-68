@@ -4,10 +4,7 @@ export interface Task {
   completed: boolean;
 }
 
-export interface TaskMutation {
-  title: string;
-  completed: boolean;
-}
+export type TaskMutation = Omit<Task, 'id'>
 
 export interface ListTask {
   [id: string]: Task

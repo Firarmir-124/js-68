@@ -1,5 +1,5 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {Task, TaskMutation} from "../../types";
+import {ListTask, Task, TaskMutation} from "../../types";
 import axiosApi from "../../axiosApi";
 
 export const addTask = createAsyncThunk<void, TaskMutation>(
@@ -12,7 +12,7 @@ export const addTask = createAsyncThunk<void, TaskMutation>(
 export const fetchTasks = createAsyncThunk(
   'task/fetch',
   async () => {
-    const resTasks = await axiosApi.get('/todo.json');
+    const resTasks = await axiosApi.get<ListTask>('/todo.json');
     const tasks = resTasks.data;
     let newTasks:Task[] = [];
 

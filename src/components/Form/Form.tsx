@@ -2,20 +2,20 @@ import React, {useState} from 'react';
 import {CircularProgress, IconButton, Paper, TextField} from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
-import {addTask} from "../../containers/Todo/todoThunks";
+import {addTask, fetchTasks} from "../../containers/Todo/todoThunks";
 
 const Form = () => {
   const dispatch = useAppDispatch();
   const loaderBtn = useAppSelector((state) => state.loaderBtn);
-
   const [value, setValue] = useState('');
 
-  const onSubmitForm = (e:React.FormEvent) => {
+  const onSubmitForm = async (e:React.FormEvent) => {
     e.preventDefault();
-    dispatch(addTask({
+    await dispatch(addTask({
       title: value,
       completed: false,
     }));
+    await dispatch(fetchTasks())
   }
 
 

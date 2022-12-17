@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Box, Paper} from "@mui/material";
+import {Box, CircularProgress, LinearProgress, Paper} from "@mui/material";
 import Form from "../../components/Form/Form";
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import TaskItem from "../../components/TaskItem/TaskItem";
@@ -38,7 +38,7 @@ const Todo = () => {
               {tasks.map((task) => (
                 <TaskItem key={task.id} task={task}/>
               ))}
-            </> : <span>Загрузка</span>
+            </> : <LinearProgress />
         }
 
       </Box>

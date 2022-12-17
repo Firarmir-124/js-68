@@ -1,9 +1,11 @@
 import React from 'react';
-import {Box, Checkbox, IconButton, Paper, Typography} from "@mui/material";
+import {Box, Checkbox, CircularProgress, IconButton, Paper, Typography} from "@mui/material";
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import Favorite from '@mui/icons-material/Favorite';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {Task} from "../../types";
+import {useAppDispatch, useAppSelector} from "../../app/hooks";
+import {fetchTasks, removeTask} from "../../containers/Todo/todoThunks";
 
 interface Props {
   task: Task;
@@ -11,6 +13,14 @@ interface Props {
 
 
 const TaskItem:React.FC<Props> = ({task}) => {
+  const dispatch = useAppDispatch();
+  const loaderRemove = useAppSelector((state) => state.loaderRemove);
+
+  const onRemoveTask = async (id:string) => {
+    await dispatch(removeTask(id))
+    await dispatch(fetchTasks());
+  }
+
   return (
     <Paper
       elevation={3}
@@ -24,8 +34,8 @@ const TaskItem:React.FC<Props> = ({task}) => {
     >
       <Typography component='h3' variant='h5' sx={{color: '#fff' }} >{task.title}</Typography>
       <Box>
-        <IconButton aria-label="delete">
-          <DeleteIcon sx={{fontSize: 28, color: '#fff'}} />
+        <IconButton aria-label="delete" onClick={() => onRemoveTask(task.id)} disabled={loaderRemove}>
+          {!loaderRemove ? <DeleteIcon sx={{fontSize: 28, color: '#fff'}} /> : <CircularProgress />}
         </IconButton>
         <Checkbox
           sx={{ '& .MuiSvgIcon-root': { fontSize: 28 }, color: '#fff' }}

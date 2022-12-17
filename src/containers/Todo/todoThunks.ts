@@ -12,7 +12,7 @@ export const addTask = createAsyncThunk<void, TaskMutation>(
 export const fetchTasks = createAsyncThunk(
   'task/fetch',
   async () => {
-    const resTasks = await axiosApi.get<ListTask>('/todo.json');
+    const resTasks = await axiosApi.get<ListTask | null>('/todo.json');
     const tasks = resTasks.data;
     let newTasks:Task[] = [];
 
@@ -21,10 +21,17 @@ export const fetchTasks = createAsyncThunk(
         const task = tasks[id];
         return {
           ...task,
-          id,
+          id
         };
       });
     }
     return newTasks;
   }
 );
+
+export const removeTask = createAsyncThunk<void, string>(
+  'task/edit',
+  async (arg) => {
+    await axiosApi.delete('/todo/' + arg + '.json')
+  }
+)

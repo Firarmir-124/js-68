@@ -1,14 +1,16 @@
 import { createSlice} from "@reduxjs/toolkit";
 import {Task} from "../../types";
-import {addTask} from "./todoThunks";
+import {addTask, fetchTasks} from "./todoThunks";
 
 interface TaskState {
   loaderBtn: boolean;
+  loaderTask: boolean;
   tasks: Task[];
 }
 
 const initialState:TaskState = {
   loaderBtn: false,
+  loaderTask: false,
   tasks: [],
 };
 
@@ -25,6 +27,16 @@ const todoSlice = createSlice({
     });
     builder.addCase(addTask.rejected, (state) => {
       state.loaderBtn = false;
+    });
+    builder.addCase(fetchTasks.pending, (state) => {
+      state.loaderTask = true;
+    });
+    builder.addCase(fetchTasks.fulfilled, (state, action) => {
+      state.loaderTask = false;
+      state.tasks = action.payload;
+    });
+    builder.addCase(fetchTasks.rejected, (state) => {
+      state.loaderTask = false;
     })
   }
 })

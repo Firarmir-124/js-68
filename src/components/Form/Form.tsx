@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
-import {IconButton, Paper, TextField} from "@mui/material";
+import {CircularProgress, IconButton, Paper, TextField} from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
-import {useAppDispatch} from "../../app/hooks";
+import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {addTask} from "../../containers/Todo/todoThunks";
 
 const Form = () => {
   const dispatch = useAppDispatch();
+  const loaderBtn = useAppSelector((state) => state.loaderBtn);
+
   const [value, setValue] = useState('');
 
   const onSubmitForm = (e:React.FormEvent) => {
@@ -31,8 +33,8 @@ const Form = () => {
         onChange={(e) => setValue(e.target.value)}
         required
       />
-      <IconButton type="submit" sx={{ p: '10px' }}>
-        <AddIcon sx={{fontSize: 40, color: '#ff4400'}}/>
+      <IconButton type="submit" sx={{ p: '10px' }} disabled={loaderBtn}>
+        {!loaderBtn ? <AddIcon sx={{fontSize: 40, color: '#ff4400'}}/> : <CircularProgress />}
       </IconButton>
     </Paper>
   );

@@ -1,9 +1,19 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Box, Paper} from "@mui/material";
 import Form from "../../components/Form/Form";
+import {useAppDispatch, useAppSelector} from "../../app/hooks";
+import TaskItem from "../../components/TaskItem/TaskItem";
+import {fetchTasks} from "./todoThunks";
 
 
 const Todo = () => {
+  const dispatch = useAppDispatch();
+  const tasks = useAppSelector((state) => state.tasks);
+  const loaderTask = useAppSelector((state) => state.loaderTask);
+
+  useEffect(() => {
+    void dispatch(fetchTasks())
+  }, [dispatch])
 
   return (
     <Paper
@@ -22,6 +32,14 @@ const Todo = () => {
         height: 460,
         '&::-webkit-scrollbar': {width: 0}}
       }>
+        {
+          !loaderTask ?
+            <>
+              {tasks.map((task) => (
+                <TaskItem key={task.id} task={task}/>
+              ))}
+            </> : <span>Загрузка</span>
+        }
 
       </Box>
 

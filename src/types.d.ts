@@ -7,5 +7,5 @@ export interface Task {
 export type TaskMutation = Omit<Task, 'id'>
 
 export interface ListTask {
-  [id: string]: Task
+  [id: string]: TaskMutation
 }

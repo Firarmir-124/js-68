@@ -21,6 +21,7 @@ const todoSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+
     builder.addCase(addTask.pending, (state) => {
       state.loaderBtn = true;
     });
@@ -30,6 +31,7 @@ const todoSlice = createSlice({
     builder.addCase(addTask.rejected, (state) => {
       state.loaderBtn = false;
     });
+
     builder.addCase(fetchTasks.pending, (state) => {
       state.loaderTask = true;
     });
@@ -40,6 +42,7 @@ const todoSlice = createSlice({
     builder.addCase(fetchTasks.rejected, (state) => {
       state.loaderTask = false;
     });
+
     builder.addCase(removeTask.pending, (state) => {
       state.loaderRemove = true;
     });

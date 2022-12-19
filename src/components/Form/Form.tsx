@@ -18,7 +18,6 @@ const Form = () => {
     await dispatch(fetchTasks())
   }
 
-
   return (
     <Paper
       component="form"

@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Box, CircularProgress, LinearProgress, Paper} from "@mui/material";
+import {Box, LinearProgress, Paper} from "@mui/material";
 import Form from "../../components/Form/Form";
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import TaskItem from "../../components/TaskItem/TaskItem";

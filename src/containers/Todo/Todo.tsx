@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Box, LinearProgress, Paper} from "@mui/material";
+import {Alert, Box, LinearProgress, Paper} from "@mui/material";
 import Form from "../../components/Form/Form";
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import TaskItem from "../../components/TaskItem/TaskItem";
@@ -32,13 +32,13 @@ const Todo = () => {
         height: 460,
         '&::-webkit-scrollbar': {width: 0}}
       }>
-        {
+        { tasks.length > 0 ?
           !loaderTask ?
             <>
               {tasks.map((task) => (
                 <TaskItem key={task.id} task={task}/>
               ))}
-            </> : <LinearProgress />
+            </> : <LinearProgress /> : <Alert severity="info">Заданий нет !</Alert>
         }
 
       </Box>

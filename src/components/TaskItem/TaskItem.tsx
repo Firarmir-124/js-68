@@ -5,7 +5,7 @@ import Favorite from '@mui/icons-material/Favorite';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {Task} from "../../types";
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
-import {fetchTasks, removeTask} from "../../containers/Todo/todoThunks";
+import {completedTask, fetchTasks, removeTask} from "../../containers/Todo/todoThunks";
 
 interface Props {
   task: Task;
@@ -18,6 +18,11 @@ const TaskItem:React.FC<Props> = ({task}) => {
 
   const onRemoveTask = async (id:string) => {
     await dispatch(removeTask(id))
+    await dispatch(fetchTasks());
+  }
+
+  const onClickDone = async (id: string) => {
+    await dispatch(completedTask(id));
     await dispatch(fetchTasks());
   }
 
@@ -41,6 +46,8 @@ const TaskItem:React.FC<Props> = ({task}) => {
           sx={{ '& .MuiSvgIcon-root': { fontSize: 28 }, color: '#fff' }}
           icon={<FavoriteBorder />}
           checkedIcon={<Favorite sx={{color: '#fff'}}/>}
+          onClick={() => onClickDone(task.id)}
+          checked={task.completed}
         />
       </Box>
     </Paper>

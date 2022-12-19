@@ -15,7 +15,8 @@ const Form = () => {
       title: value,
       completed: false,
     }));
-    await dispatch(fetchTasks())
+    await dispatch(fetchTasks());
+    setValue('');
   }
 
   return (

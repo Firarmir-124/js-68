@@ -4,17 +4,17 @@ import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import Favorite from '@mui/icons-material/Favorite';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {Task} from "../../types";
-import {useAppDispatch, useAppSelector} from "../../app/hooks";
+import {useAppDispatch} from "../../app/hooks";
 import {completedTask, fetchTasks, removeTask} from "../../containers/Todo/todoThunks";
 
 interface Props {
   task: Task;
+  removeLoader: false | string;
 }
 
 
-const TaskItem:React.FC<Props> = ({task}) => {
+const TaskItem:React.FC<Props> = ({task, removeLoader}) => {
   const dispatch = useAppDispatch();
-  const loaderRemove = useAppSelector((state) => state.loaderRemove);
 
   const onRemoveTask = async (id:string) => {
     await dispatch(removeTask(id))
@@ -39,8 +39,8 @@ const TaskItem:React.FC<Props> = ({task}) => {
     >
       <Typography component='h3' variant='h5' sx={{color: '#fff' }} >{task.title}</Typography>
       <Box>
-        <IconButton aria-label="delete" onClick={() => onRemoveTask(task.id)} disabled={loaderRemove}>
-          {!loaderRemove ? <DeleteIcon sx={{fontSize: 28, color: '#fff'}} /> : <CircularProgress />}
+        <IconButton aria-label="delete" onClick={() => onRemoveTask(task.id)} disabled={removeLoader ? removeLoader === task.id : false}>
+          {removeLoader === task.id ? <CircularProgress /> : <DeleteIcon sx={{fontSize: 28, color: '#fff'}} />}
         </IconButton>
         <Checkbox
           sx={{ '& .MuiSvgIcon-root': { fontSize: 28 }, color: '#fff' }}

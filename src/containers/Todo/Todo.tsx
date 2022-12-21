@@ -10,6 +10,7 @@ const Todo = () => {
   const dispatch = useAppDispatch();
   const tasks = useAppSelector((state) => state.tasks);
   const loaderTask = useAppSelector((state) => state.loaderTask);
+  const removeLoader = useAppSelector(state => state.loaderRemove);
 
   useEffect(() => {
     void dispatch(fetchTasks())
@@ -36,7 +37,7 @@ const Todo = () => {
           !loaderTask ?
             <>
               {tasks.map((task) => (
-                <TaskItem key={task.id} task={task}/>
+                <TaskItem key={task.id} task={task} removeLoader={removeLoader}/>
               ))}
             </> : <LinearProgress /> : <Alert severity="info">Заданий нет !</Alert>
         }

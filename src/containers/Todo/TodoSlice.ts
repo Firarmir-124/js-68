@@ -5,7 +5,7 @@ import {addTask, fetchTasks, removeTask} from "./todoThunks";
 interface TaskState {
   loaderBtn: boolean;
   loaderTask: boolean;
-  loaderRemove: boolean;
+  loaderRemove: false | string;
   tasks: Task[];
 }
 
@@ -43,8 +43,8 @@ const todoSlice = createSlice({
       state.loaderTask = false;
     });
 
-    builder.addCase(removeTask.pending, (state) => {
-      state.loaderRemove = true;
+    builder.addCase(removeTask.pending, (state, {meta}) => {
+      state.loaderRemove = meta.arg;
     });
     builder.addCase(removeTask.fulfilled, (state) => {
       state.loaderRemove = false;
